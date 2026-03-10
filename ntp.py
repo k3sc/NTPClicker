@@ -319,8 +319,8 @@ class NTPClickerUI:
 
                 # 解析NTP响应包，提取服务器端时间戳
                 unpacked = struct.unpack("!12I", msg)
-                t_server_recv = unpacked[8] - NTP_EPOCH  # 服务器接收请求的时间
-                t_server_send = unpacked[10] - NTP_EPOCH  # 服务器发送响应的时间
+                t_server_recv = unpacked[8] + unpacked[9] / 2**32 - NTP_EPOCH  # 服务器接收请求的时间
+                t_server_send = unpacked[10] + unpacked[11] / 2**32 - NTP_EPOCH  # 服务器发送响应的时间
 
                 # 计算标准NTP延迟（RTT）和时间偏移
                 rtt = (t1 - t0) - (t_server_send - t_server_recv)  # 纯网络延迟
@@ -394,7 +394,7 @@ class NTPClickerUI:
             if current_second == self.target_second and current_second != self.last_second:
                 self.triggered = True
                 self.last_second = current_second  # 记录当前秒数，防止重复触发
-                self.root.after(10, self.do_click)  # 立即触发点击（延迟10ms避免UI卡顿）
+                self.do_click()
 
         # 每20ms更新一次时钟（50帧/秒，兼顾精度和性能）
         self.root.after(20, self.update_clock)
