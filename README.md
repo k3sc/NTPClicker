@@ -1,6 +1,7 @@
 # ⏰ NTP同步点击器
 
 一个轻量、精准的 NTP 时间同步工具，支持毫秒级时间显示与指定秒数自动点击触发。
+三角洲撞车工具。
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Language](https://img.shields.io/badge/Language-Python-blue.svg)](https://learn.microsoft.com/zh-cn/dotnet/csharp/)
